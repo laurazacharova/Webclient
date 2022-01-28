@@ -15,7 +15,7 @@ public:
     explicit Webclient(QWidget *parent = nullptr);
 
 private slots:
-    void goButton();
+    void on_gobut_clicked();
 
 private:
     void outputinformation(QString output);

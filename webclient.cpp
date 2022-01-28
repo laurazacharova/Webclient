@@ -7,7 +7,6 @@ Webclient::Webclient(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(inputweb, &QLineEdit::returnPressed, this, &Webclient::goButton);
     m_socket = new QTcpSocket(this);
     connect(m_socket, &QTcpSocket::connected, this, &Webclient::socketisconnected);
     connect(m_socket, &QTcpSocket::readyRead, this, &Webclient::function);
@@ -26,15 +25,17 @@ void Webclient::socketisconnected()
 
 void Webclient::function()
 {
-    qDebug()<<"connected";
     outputinformation(m_socket->readAll());
     m_socket->disconnectFromHost();
 }
 
-void Webclient::goButton()
+void Webclient::on_gobut_clicked()
 {
-
-    if(!m_socket->waitForConnected(8000))
+    if (!m_socket->waitForConnected(2000))
+    {
+        outputinfo->setText("Not Connected!");
+    }
+    /*if(!m_socket->waitForConnected(2000))
     {
         outputinfo->setText("NOT CONNECTED!");
     }
@@ -42,6 +43,7 @@ void Webclient::goButton()
     {
         m_socket->connectToHost(inputweb->text(),m_port);
     }
+    */
 }
 
 
